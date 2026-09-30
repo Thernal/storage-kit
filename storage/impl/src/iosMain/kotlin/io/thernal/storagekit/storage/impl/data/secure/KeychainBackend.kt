@@ -91,7 +91,10 @@ class KeychainBackend(
 
     override suspend fun names(): Set<String> {
         return withContext(Dispatchers.IO) {
-            val found = copyMatching(serviceItems() + (kSecReturnAttributes to kCFBooleanTrue) + (kSecMatchLimit to kSecMatchLimitAll))
+            val query = serviceItems() +
+                (kSecReturnAttributes to kCFBooleanTrue) +
+                (kSecMatchLimit to kSecMatchLimitAll)
+            val found = copyMatching(query)
                 ?.let { result -> CFBridgingRelease(result) as? List<*> }
                 .orEmpty()
             val account = CFBridgingRelease(CFBridgingRetain(CFBridgingRelease(kSecAttrAccount)))
@@ -123,7 +126,9 @@ class KeychainBackend(
     private fun delete(query: List<Pair<CFTypeRef?, CFTypeRef?>>) {
         withDictionary(query) { dictionary ->
             val status = SecItemDelete(dictionary)
-            if (status != errSecItemNotFound) check("delete", status)
+            if (status != errSecItemNotFound) {
+                check("delete", status)
+            }
         }
     }
 
@@ -131,7 +136,12 @@ class KeychainBackend(
         entries: List<Pair<CFTypeRef?, CFTypeRef?>>,
         block: (CFDictionaryRef?) -> R,
     ): R {
-        val dictionary = CFDictionaryCreateMutable(null, entries.size.toLong(), kCFTypeDictionaryKeyCallBacks.ptr, kCFTypeDictionaryValueCallBacks.ptr)
+        val dictionary = CFDictionaryCreateMutable(
+            null,
+            entries.size.toLong(),
+            kCFTypeDictionaryKeyCallBacks.ptr,
+            kCFTypeDictionaryValueCallBacks.ptr,
+        )
         entries.forEach { (key, value) -> CFDictionaryAddValue(dictionary, key, value) }
         return try {
             block(dictionary)
@@ -144,7 +154,9 @@ class KeychainBackend(
         operation: String,
         status: Int,
     ) {
-        if (status != errSecSuccess) throw KeychainException(operation, status)
+        if (status != errSecSuccess) {
+            throw KeychainException(operation, status)
+        }
     }
 
     private fun String.retained(): CFTypeRef? {
