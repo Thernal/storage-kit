@@ -1,0 +1,54 @@
+# What an application takes from storage-kit, and how. Read by `skillctl.sh kit …`
+# (the skill-manager skill in github.com/Thernal/knowledge), which parses it with
+# sed and awk — so keep to this shape: `key: value` scalars, `key:` followed by
+# `  - item` lines, `#` comments. No nesting, no quoting, no inline lists.
+#
+# An application does not depend on storage-kit as a library: it copies the
+# `code` parts into its own tree, renamed to its own package and module path, and
+# skill-manager records where the copy came from so every later change here can
+# be offered to it — merged three ways, so edits made in the application survive.
+
+name: storage-kit
+
+# Rename points, applied to every file taken from here, code and skill alike.
+#   package  the Kotlin package prefix, and the source directories it implies
+#   module   the Gradle path prefix of the code parts, and the directory it implies
+#   alias    the version-catalog plugin alias prefix the build files use
+package: io.thernal.storagekit
+module: :storage
+alias: storagekit
+
+# Copied into the application and merged on update.
+code:
+  - storage/api
+  - storage/impl
+  - storage/wiring
+  - storage/testing
+
+# The public contract — its source, not its README.
+surface:
+  - storage/api/src
+  - storage/testing/src/commonMain
+
+# Installed into the application's skills directory, renamed like the code.
+skill:
+  - skills/storage-kit
+
+# Never copied. A change here is announced on update and read in place.
+docs:
+  - README.md
+  - storage/README.md
+  - storage/api/README.md
+  - docs
+
+# What the copied modules expect the application to provide. Shown at install and
+# whenever these lines change; never written into the application's build.
+requires:
+  - plugin <alias>.kmp.library — Kotlin Multiplatform library (build-logic/convention: KmpLibraryConventionPlugin)
+  - plugin <alias>.injection — Metro, for storage/wiring only (build-logic/convention: InjectionConventionPlugin)
+  - targets android, iosArm64, iosSimulatorArm64 — the same set as nav-kit and paging-kit
+  - catalog kotlinx-coroutines-core, kotlinx-coroutines-test (kotlinx-coroutines = 1.11.0)
+  - catalog datastore-preferences-core (datastore = 1.2.1), okio (okio = 3.16.0) — storage/impl
+  - catalog kotlin-test, kotlin-test-junit (kotlin) — storage/testing ships a test suite as main code
+  - catalog metro-runtime, plugin metro (metro = 1.4.2) — storage/wiring only; on Android the graph provides the application Context
+  - settings enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS"), and each code part included as a module
