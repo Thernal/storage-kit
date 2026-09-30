@@ -23,13 +23,46 @@ store.observe(LastSyncedAt).collect { … }
 | [`skills/storage-kit`](skills/storage-kit/SKILL.md) | the same for an agent working in an app that uses the kit |
 | [`docs/todos/`](docs/todos) | open questions |
 
-## For AI agents
+## Installing
 
-An application takes the kit by copy: `skillctl.sh kit install storage-kit --package <its package>
---module <its module path> --alias <its plugin alias>` copies `storage/api`, `impl`, `wiring` and
-`testing` renamed, installs the `storage-kit` skill, and records both in `kits.lock`, so every later
-change here can be merged into the copy. `kit.yml` lists what the copied modules expect from the
-application's build.
+An application takes the kit **by copy**, not as a dependency: the code is copied into the app, renamed to the app's own package, and belongs to the app from then on. Nothing is published to a Maven repository.
+
+### With skill-manager
+
+If you have access to the author's knowledge repository (`github.com/Thernal/knowledge`), its **skill-manager** skill does all of it — copy, rename, the skill, and later updates:
+
+```sh
+skillctl.sh kit install storage-kit --package com.example.app --module :core:storage --alias app
+```
+
+It copies the `code` parts of [`kit.yml`](kit.yml) renamed, installs the `storage-kit` skill and records the copy in `kits.lock`. `kit status` then shows what changed upstream and what the app edited; `kit update` merges the kit's changes three ways, keeping the app's edits. The install prints what the app must provide (`requires`).
+
+### Without it
+
+The same by hand, from a clone of this repository.
+
+1. **Copy** the paths listed under `code` in [`kit.yml`](kit.yml) into the app, under the module path the app gives them: `storage/…` → `core/storage/…`. Note the commit you copied (`git rev-parse HEAD`) — updates start from it.
+2. **Rename** in everything copied:
+
+   | In the kit | Becomes | Where |
+   |---|---|---|
+   | `io.thernal.storagekit` | the app's package, e.g. `com.example.app` | sources, build files; and the directories `io/thernal/storagekit` |
+   | `:storage:` and `":storage"`, `projects.storage.` | the module path, e.g. `:core:storage:`, `projects.core.storage.` | build files |
+   | `libs.plugins.storagekit.` | the app's catalog alias, e.g. `libs.plugins.app.` | build files |
+
+   ```sh
+   # in the app, after copying — perl, so it runs the same on macOS and Linux
+   grep -rlI -e io.thernal.storagekit -e io/thernal/storagekit -e :storage -e plugins.storagekit. core/storage \
+     | xargs perl -pi -e 's/\Qio.thernal.storagekit\E/com.example.app/g; s{\Qio/thernal/storagekit\E}{com/example/app}g; s/\Q:storage:\E/:core:storage:/g; s/"\Q:storage\E"/":core:storage"/g; s/projects\.\Qstorage\E\./projects.core.storage./g; s/libs\.plugins\.\Qstoragekit\E\./libs.plugins.app./g'
+   find core/storage -depth -type d -path '*/io/thernal/storagekit' | while read -r d; do
+     mkdir -p "${d%/io/thernal/storagekit}/com/example" && mv "$d" "${d%/io/thernal/storagekit}/com/example/app"
+   done
+   find core/storage -depth -type d -empty -delete
+   ```
+
+3. **Provide** what the copy expects — the `requires` list in [`kit.yml`](kit.yml): convention plugins (build-kit's, or the ones in this repository's `build-logic/convention`), catalog entries, settings — and, where listed, platform setup.
+4. **The skill** (optional): copy [`skills/storage-kit`](skills/storage-kit) into the app's skills directory (`.claude/skills/` for Claude Code), with the same renames, so an agent working in the app knows the kit.
+5. **Updates** are yours to carry: `git diff <the commit you copied> <a newer one> -- <the code paths>` in the kit shows what changed; apply what you want, renamed the same way.
 
 ## Layout
 

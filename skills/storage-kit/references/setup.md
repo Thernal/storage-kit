@@ -6,6 +6,8 @@ the chosen module path) and provide what `kit.yml`'s `requires` lists: the `<ali
 `<alias>.injection` conventions, the catalog entries (kotlinx-coroutines, datastore-preferences-core, okio,
 metro-runtime, kotlin-test, kotlin-test-junit, kotlinx-coroutines-test), `TYPESAFE_PROJECT_ACCESSORS`.
 
+Without skill-manager, the kit's `README.md` → Installing → *Without it* does the same by hand (copy, rename, provide).
+
 ## Dependencies
 
 ```kotlin
