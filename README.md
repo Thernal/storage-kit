@@ -91,8 +91,9 @@ fails on any finding. The Gradle daemon runs on JDK 21 (Metro's Gradle plugin), 
 The same `KeyValueStoreContract` runs against the fakes, the DataStore store, the secure store over an
 in-memory backend, and the Android secure store end to end (a software AES key standing in for the
 Keystore, which the JVM host does not have). The iOS Keychain test needs a Keychain, which the
-Kotlin/Native test runner does not provide; it reports that and checks nothing there — see
-[`docs/todos/keychain-in-an-app.md`](docs/todos/keychain-in-an-app.md).
+Kotlin/Native test runner does not provide; it reports that and checks nothing there. The backend's
+round trip was verified against the macOS login Keychain through the same Security API — see
+[`docs/todos/keychain-access-groups.md`](docs/todos/keychain-access-groups.md).
 
 ## Static analysis
 
