@@ -2,7 +2,6 @@ package io.thernal.storagekit.storage.testing
 
 import io.thernal.storagekit.storage.api.data.Key
 import io.thernal.storagekit.storage.api.data.KeyValueStore
-import io.thernal.storagekit.storage.api.data.SecureKeyValueStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,9 +52,3 @@ open class FakeKeyValueStore(
         return values
     }
 }
-
-/** The in-memory stand-in for the secure store; nothing is encrypted — there is nothing to protect. */
-class FakeSecureKeyValueStore(
-    initial: Map<String, String> = emptyMap(),
-) : FakeKeyValueStore(initial),
-    SecureKeyValueStore

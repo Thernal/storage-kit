@@ -5,10 +5,6 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import kotlin.io.encoding.Base64
 
-private const val TRANSFORMATION = "AES/GCM/NoPadding"
-private const val GCM_TAG_LENGTH_BITS = 128
-private const val SEPARATOR = ':'
-
 /**
  * AES/GCM over strings: a fresh IV per value, stored as `base64(iv):base64(ciphertext+tag)`. GCM
  * authenticates, so a tampered or foreign value fails to decrypt instead of decrypting to garbage.
@@ -35,3 +31,7 @@ class AesGcmCipher(
         return cipher.doFinal(Base64.decode(encrypted)).decodeToString()
     }
 }
+
+private const val TRANSFORMATION = "AES/GCM/NoPadding"
+private const val GCM_TAG_LENGTH_BITS = 128
+private const val SEPARATOR = ':'

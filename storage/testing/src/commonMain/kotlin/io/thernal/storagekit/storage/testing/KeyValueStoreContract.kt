@@ -19,11 +19,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-private const val LAUNCHES = 3
-private const val OTHER_LAUNCHES = 7
-private const val OBSERVED_EMISSIONS = 3
-private const val MAX_WAITS = 2_000
-
 /**
  * What every [KeyValueStore] must do. Extend it in a test source set with [createStore] returning the
  * store under test — a real one over a temporary file, or a replacement an app writes — and every
@@ -137,3 +132,8 @@ abstract class KeyValueStoreContract {
         }
     }
 }
+
+private const val LAUNCHES = 3
+private const val OTHER_LAUNCHES = 7
+private const val OBSERVED_EMISSIONS = 3
+private const val MAX_WAITS = 2_000

@@ -11,12 +11,12 @@ import io.thernal.storagekit.storage.impl.data.preferences.preferencesKeyValueSt
 
 /**
  * Binds the plain store into an application graph. The directory and the secure store are
- * platform bindings — `StorageAndroidWiring` (which needs an Android `Context` in the graph) and
- * `StorageIosWiring`. Every binding is a singleton: DataStore allows one instance per file.
+ * platform bindings — `StorageAndroidProvidersModule` (which needs an Android `Context` in the graph) and
+ * `StorageIosProvidersModule`. Every binding is a singleton: DataStore allows one instance per file.
  */
 @BindingContainer
 @ContributesTo(AppScope::class)
-interface StorageWiring {
+interface StorageProvidersModule {
     companion object {
         @Provides
         @SingleIn(AppScope::class)

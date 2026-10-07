@@ -30,7 +30,7 @@ class EncryptedDataStoreStoreTest : KeyValueStoreContract() {
     }
 
     @Test
-    fun theFileHoldsNoPlainText() {
+    fun `the file holds no plain text`() {
         runTest {
             createStore().set(stringKey("token"), "hunter2")
 
@@ -39,7 +39,7 @@ class EncryptedDataStoreStoreTest : KeyValueStoreContract() {
     }
 
     @Test
-    fun aValueWhoseKeyIsGoneIsRemovedAndReadAsAbsent() {
+    fun `a value whose key is gone is removed and read as absent`() {
         runTest {
             val store = createStore()
             store.set(stringKey("token"), "hunter2")

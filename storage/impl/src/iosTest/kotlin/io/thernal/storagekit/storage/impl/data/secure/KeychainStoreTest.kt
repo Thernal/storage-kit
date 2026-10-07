@@ -19,7 +19,7 @@ class KeychainStoreTest {
     private val store = SecretKeyValueStore(backend)
 
     @Test
-    fun valuesRoundTripThroughTheKeychain() {
+    fun `values round trip through the keychain`() {
         runTest {
             val token = stringKey("token")
             try {
