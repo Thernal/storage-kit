@@ -14,7 +14,7 @@ import io.thernal.storagekit.storage.impl.data.secure.androidSecureKeyValueStore
 /** The Android bindings. The graph must provide the application `Context`. */
 @BindingContainer
 @ContributesTo(AppScope::class)
-interface StorageAndroidWiring {
+interface StorageAndroidProvidersModule {
     companion object {
         @Provides
         @SingleIn(AppScope::class)

@@ -13,7 +13,7 @@ import io.thernal.storagekit.storage.impl.data.secure.iosSecureKeyValueStore
 /** The iOS bindings: Application Support for files, the Keychain under `<bundle id>.secure-storage`. */
 @BindingContainer
 @ContributesTo(AppScope::class)
-interface StorageIosWiring {
+interface StorageIosProvidersModule {
     companion object {
         @Provides
         @SingleIn(AppScope::class)

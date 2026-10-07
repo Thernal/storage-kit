@@ -18,7 +18,7 @@ class AesGcmCipherTest {
     private val cipher = AesGcmCipher { key }
 
     @Test
-    fun roundTripsAndNeverRepeatsACiphertext() {
+    fun `round trips and never repeats a ciphertext`() {
         val first = cipher.encrypt("secret")
         val second = cipher.encrypt("secret")
 
@@ -28,7 +28,7 @@ class AesGcmCipherTest {
     }
 
     @Test
-    fun rejectsTamperedForeignAndMalformedValues() {
+    fun `rejects tampered foreign and malformed values`() {
         val stored = cipher.encrypt("secret")
         val flipped = if (stored.last() == 'A') {
             "BA"

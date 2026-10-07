@@ -12,7 +12,7 @@ class KeyTest {
     private enum class Flags : BooleanKey { ONBOARDING_SEEN }
 
     @Test
-    fun anEnumConstantIsAKeyNamedAfterItself() {
+    fun `an enum constant is a key named after itself`() {
         val key: Key<String> = SessionKeys.ACCESS_TOKEN
         assertEquals("ACCESS_TOKEN", key.name)
         assertSame(KeyCodec.String, key.codec)
@@ -20,13 +20,13 @@ class KeyTest {
     }
 
     @Test
-    fun keysBuiltFromValuesCompareByNameAndCodec() {
+    fun `keys built from values compare by name and codec`() {
         assertEquals(stringKey("a"), stringKey("a"))
         assertFailsWith<IllegalArgumentException> { stringKey(" ") }
     }
 
     @Test
-    fun codecsRoundTripAndRejectForeignStrings() {
+    fun `codecs round trip and reject foreign strings`() {
         assertEquals(42, KeyCodec.Int.decode(KeyCodec.Int.encode(42)))
         assertEquals(Long.MAX_VALUE, KeyCodec.Long.decode(KeyCodec.Long.encode(Long.MAX_VALUE)))
         assertEquals(0.25, KeyCodec.Double.decode(KeyCodec.Double.encode(0.25)))
@@ -36,7 +36,7 @@ class KeyTest {
     }
 
     @Test
-    fun aCustomCodecCarriesAnEnumValue() {
+    fun `a custom codec carries an enum value`() {
         val themeCodec = KeyCodec.codec<Theme>(
             encode = { it.name },
             decode = { stored -> Theme.entries.find { it.name == stored } },

@@ -6,8 +6,6 @@ import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
-private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
-
 /**
  * An AES key held by the Android Keystore under [alias]: generated on first use, never leaving the
  * secure hardware where the device has it. It does not survive an uninstall or a restore to another
@@ -35,3 +33,5 @@ class AndroidKeystoreKey(
             .generateKey()
     }
 }
+
+private const val KEYSTORE_PROVIDER = "AndroidKeyStore"

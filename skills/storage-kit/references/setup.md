@@ -27,7 +27,7 @@ No `api(...)`: each module declares what it uses.
 
 ## Metro
 
-`StorageWiring` (common), `StorageAndroidWiring`, `StorageIosWiring` contribute to `AppScope`:
+`StorageProvidersModule` (common), `StorageAndroidProvidersModule`, `StorageIosProvidersModule` contribute to `AppScope`:
 `KeyValueStore`, `SecureKeyValueStore`, `StorageDirectory`, all singletons. On Android the graph must
 provide the application `Context`:
 

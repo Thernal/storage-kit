@@ -70,7 +70,7 @@ The same by hand, from a clone of this repository.
 |---|---|---|
 | `storage/api` | `Key`, `KeyCodec`, `StringKey`/`IntKey`/…, `KeyValueStore`, `SecureKeyValueStore` | coroutines |
 | `storage/impl` | `DataStoreKeyValueStore`; `SecretKeyValueStore` over a platform `SecretBackend` — `EncryptedDataStoreBackend` + `AesGcmCipher` + `AndroidKeystoreKey` on Android, `KeychainBackend` on iOS; the storage directory | api, DataStore, Okio |
-| `storage/wiring` | Metro bindings: `StorageWiring`, `StorageAndroidWiring`, `StorageIosWiring` | api, impl |
+| `storage/wiring` | Metro bindings: `StorageProvidersModule`, `StorageAndroidProvidersModule`, `StorageIosProvidersModule` | api, impl |
 | `storage/testing` | `FakeKeyValueStore`, `FakeSecureKeyValueStore`, and `KeyValueStoreContract` — the test suite every store passes | api, kotlin-test |
 
 ## Targets

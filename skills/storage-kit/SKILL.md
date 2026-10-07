@@ -1,6 +1,6 @@
 ---
 name: storage-kit
-description: Stores and reads local key-value data in Compose Multiplatform apps that use storage-kit (packages io.thernal.storagekit.storage.*; Key, StringKey, IntKey, LongKey, DoubleKey, BooleanKey, stringKey, KeyCodec, KeyValueStore, SecureKeyValueStore, FakeKeyValueStore, KeyValueStoreContract, StorageWiring). Use it for any local persistence of settings, flags, counters, identifiers, tokens or credentials in such a project, even when storage-kit is not named - installing the kit, declaring keys as values or enums, reading, writing and observing values, keeping tokens encrypted (Android Keystore, iOS Keychain), sign-out, feeding a debug console, and testing code that stores things. Not for databases, files, caches of large data, or projects without storage-kit.
+description: Stores and reads local key-value data in Compose Multiplatform apps that use storage-kit (packages io.thernal.storagekit.storage.*; Key, StringKey, IntKey, LongKey, DoubleKey, BooleanKey, stringKey, KeyCodec, KeyValueStore, SecureKeyValueStore, FakeKeyValueStore, KeyValueStoreContract, StorageProvidersModule). Use it for any local persistence of settings, flags, counters, identifiers, tokens or credentials in such a project, even when storage-kit is not named - installing the kit, declaring keys as values or enums, reading, writing and observing values, keeping tokens encrypted (Android Keystore, iOS Keychain), sign-out, feeding a debug console, and testing code that stores things. Not for databases, files, caches of large data, or projects without storage-kit.
 ---
 
 # storage-kit
@@ -13,7 +13,7 @@ guide: https://github.com/Thernal/storage-kit — `storage/api/README.md`.
 ## 1. Orient first
 
 ```sh
-grep -rn --include=*.kt -e "StorageWiring" -e "preferencesKeyValueStore(" -e "SecureKeyValueStore(" .   # installed? how?
+grep -rn --include=*.kt -e "StorageProvidersModule" -e "preferencesKeyValueStore(" -e "SecureKeyValueStore(" .   # installed? how?
 grep -rn --include=*.kt -e ": StringKey" -e ": IntKey" -e ": LongKey" -e ": BooleanKey" -e ": DoubleKey" .  # enum key sets
 grep -rn --include=*.kt -e "stringKey(\"" -e "longKey(\"" -e "intKey(\"" -e "booleanKey(\"" -e "key(\"" .   # value keys — names taken
 grep -rn --include=*.kt -e "observeAll()" .                                                                 # console wiring

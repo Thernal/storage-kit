@@ -31,7 +31,7 @@ The two are separate stores: `clear()` on one leaves the other.
 |---|---|---|
 | `:storage:api` | every module that reads or writes a value | the contracts in this document |
 | `:storage:impl` | the module that builds the graph (or wires by hand) | the stores, the Android and iOS backends |
-| `:storage:wiring` | the module that declares the [Metro](https://github.com/ZacSweers/metro) graph | `StorageWiring`, `StorageAndroidWiring`, `StorageIosWiring` |
+| `:storage:wiring` | the module that declares the [Metro](https://github.com/ZacSweers/metro) graph | `StorageProvidersModule`, `StorageAndroidProvidersModule`, `StorageIosProvidersModule` |
 | `:storage:testing` | test source sets | `FakeKeyValueStore`, `FakeSecureKeyValueStore`, `KeyValueStoreContract` |
 
 ```kotlin

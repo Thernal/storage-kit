@@ -163,8 +163,3 @@ class KeychainBackend(
         return CFBridgingRetain(NSString.create(string = this))
     }
 }
-
-class KeychainException(
-    operation: String,
-    val status: Int,
-) : IllegalStateException("Keychain $operation failed with OSStatus $status")
